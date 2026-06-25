@@ -4,14 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import useEmblaCarousel from "embla-carousel-react";
-import {
-  Code2,
-  Palette,
-  Megaphone,
-  Globe,
-  Briefcase,
-  MessagesSquare,
-  Sparkles,
+import { Code2, Palette, Megaphone, Globe, Briefcase, MessagesSquare, Sparkles,
 } from "lucide-react";
 
 export default function Categories() {

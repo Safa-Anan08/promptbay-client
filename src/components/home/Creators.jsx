@@ -53,7 +53,7 @@ export default function Creators() {
 
       <div
         ref={emblaRef}
-        className="overflow-hidden"
+      
       >
         <div className="flex gap-7">
           {creators.map((creator) => {
