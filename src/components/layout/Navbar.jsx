@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
-import { useRouter } from "next/navigation";
+import { useRouter ,usePathname} from "next/navigation";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -16,6 +16,8 @@ import { useTheme } from "next-themes";
 export default function Navbar() {
   const router = useRouter();
   const { user, setUser } = useAuth();
+  const pathname = usePathname();
+  const isDashboard = pathname.startsWith("/dashboard");
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -35,14 +37,26 @@ export default function Navbar() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const links = [
-    { name: "Explore", href: "/prompts" },
-    { name: "Pricing", href: "/pricing" },
-    {
-      name: "Dashboard",
-      href: user ? `/dashboard/${user.role}` : "/login",
-    },
-  ];
+ const links = [
+  {
+    name:  "Explore",
+    href:  "/prompts",
+  },
+
+  {
+    name: "Pricing",
+    href: "/pricing",
+  },
+
+  {
+    name: isDashboard ? "Home" : "Dashboard" ,
+    href: isDashboard
+      ? "/"
+      : user
+      ? `/dashboard/${user.role}`
+      : "/login",
+  },
+];
 
   const isDark = theme === "dark";
 
