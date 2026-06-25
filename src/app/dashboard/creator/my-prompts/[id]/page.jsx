@@ -1,0 +1,1 @@
+export {default} from "../../../user/my-prompts/[id]/page";
