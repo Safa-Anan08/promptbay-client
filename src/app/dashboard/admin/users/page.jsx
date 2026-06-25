@@ -51,7 +51,7 @@ export default function Page() {
 
   return (
     <div className="space-y-8">
-      {/* HEADER */}
+    
 
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div>
@@ -83,7 +83,7 @@ export default function Page() {
         </div>
       </div>
 
-      {/* SEARCH */}
+     
 
       <div className="glass-card rounded-3xl p-5 flex items-center gap-4">
         <Search className="text-muted-foreground" />

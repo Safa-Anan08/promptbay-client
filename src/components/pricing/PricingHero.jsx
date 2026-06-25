@@ -1,19 +1,27 @@
 "use client";
 
-export default function PricingHero(){
-return(
+import { ArrowRight, Sparkles, Rocket } from "lucide-react";
 
-   <section className="text-center py-24">
-   <div className="inline-flex rounded-full border px-5 py-2 mb-8">
-        ✨ Premium Access
-    </div>
-      <h1 className="text-7xl font-black">
-     Choose Your
-          <span className="bg-gradient-to-r from-violet-500 to-cyan-500 bg-clip-text text-transparent">
-           Plan</span>
-     </h1>
-   <p className="mt-8 text-xl text-muted-foreground">Unlock premium prompts & creator tools</p>
+export default function PricingHero() {
+  return (
+    <section className="text-center pt-24">
+      <div className="mb-20">
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-500/10">
+          <Rocket size={18} />
+          Upgrade Your Experience
+        </div>
 
+        <h1 className="text-6xl font-black mt-8">
+          Choose Your <br />
+          <span className="bg-gradient-to-r from-violet-600 to-cyan-500 bg-clip-text text-transparent">
+            Premium Plan
+          </span>
+        </h1>
+
+        <p className="mt-6 text-lg opacity-70">
+          Unlock premium prompts, creator growth and advanced access.
+        </p>
+      </div>
     </section>
   );
-    }
+}
