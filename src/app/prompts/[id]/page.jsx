@@ -60,15 +60,32 @@ const [reportReason,setReportReason]=useState("");
     }
   };
 
-  const bookmark = async () => {
-    try {
-      const res = await axiosInstance.post(`/bookmarks/${id}`);
-      toast.success(res.data.message);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login first");
-    }
-  };
+      const [bookmarked, setBookmarked] = useState(false);
 
+       useEffect(() => {
+        setBookmarked(
+         data?.isBookmarked || false
+        );
+         }, [data]);
+        const bookmark = async () => {
+         try {
+
+         const res =await axiosInstance.post(`/bookmarks/${id}`);
+
+     setBookmarked(prev => !prev);
+
+      toast.success(
+     res.data.message
+      );
+
+     } catch (err) {
+
+     toast.error(
+      err.response?.data?.message ||
+      "Failed"
+      );
+  }
+};
   const submitReview = async () => {
     if (!comment.trim()) return alert("Write a review");
 
@@ -134,7 +151,7 @@ const reportPrompt = async () => {
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-          <div className="absolute bottom-10 left-10">
+          <div className="absolute bottom-10 left-8">
             <span className="inline-flex gap-2 rounded-full bg-white/10 px-5 py-2 backdrop-blur-xl text-white">
               <Sparkles size={18} />
               {data.category}
@@ -148,14 +165,16 @@ const reportPrompt = async () => {
               {data.description}
             </p>
 
-            <div className="mt-8 flex gap-4">
-              <button
-                onClick={bookmark}
-                className="btn-primary flex items-center gap-2 rounded-2xl px-8 py-4"
-              >
-                <Bookmark size={18} />
-                Bookmark
-              </button>
+            <div className="mt-8 flex justify-start gap-4">
+                 <button
+                   onClick={bookmark}
+                   className={`flex items-center gap-2 rounded-2xl px-8 py-4 transition
+                   ${ bookmarked ? "bg-yellow-500 text-black"
+                   : "btn-primary"
+                 }`}>
+               <Bookmark size={18} fill={ bookmarked ? "currentColor" : "none"}/>
+               { bookmarked ? "Bookmarked" : "Bookmark"}
+                </button>
 
               {access && (
                 <button
@@ -168,9 +187,10 @@ const reportPrompt = async () => {
               )}
             </div>
           </div>
+          
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+        <div className="mt-8 grid gap-8 lg:grid-cols-3">
 
           <div className="lg:col-span-2">
 
@@ -224,8 +244,8 @@ const reportPrompt = async () => {
                 <p>Creator: <b>{data.creatorName}</b></p>
                 <p>Copies: <b>{data.copyCount}</b></p>
                 <p>Reviews: <b>{data.reviewCount}</b></p>
-                <p>
-                  Rating: <b> <span className="flex gap-2"><Star/> {Number(data.rating || 0).toFixed(1)}</span></b>
+                <p className="flex">
+                  Rating: <b> <span className=" mx-2 flex gap-2"><Star/> {Number(data.rating || 0).toFixed(1)}</span></b>
                 </p>
               </div>
             </div>
@@ -249,7 +269,7 @@ const reportPrompt = async () => {
         </div>
 
         {access && (
-          <div className="mt-20">
+          <div className="mt-8">
 
             <div className="glass-card rounded-[30px] p-8">
 
@@ -283,7 +303,7 @@ const reportPrompt = async () => {
                   className="mt-5 min-h-[160px] w-full rounded-3xl border border-border bg-transparent p-5"
                 />
 
-                <div className=" ">
+                <div className=" flex mt-2 ">
 
                   <button
                     onClick={submitReview}
@@ -292,7 +312,7 @@ const reportPrompt = async () => {
                     Submit Review
                   </button>
                   <button onClick={() => setShowReportModal(true)} 
-                  className="mt-6 mx-4 border border-red-500 text-red-500 px-6 py-3 rounded-2xl hover:bg-red-500 hover:text-white transition">
+                  className="mx-2 border border-red-500 text-red-500 px-6 py-3 rounded-2xl hover:bg-red-500 hover:text-white transition">
                    Report Prompt
                     </button>
                 </div>

@@ -19,7 +19,7 @@ function SuccessContent() {
           `/payments/success/${sessionId}`
         );
 
-        router.replace("/dashboard/profile");
+        window.location.href = "/dashboard/profile";
       } catch (err) {
         console.log(err);
         alert("Invalid payment");
@@ -31,7 +31,7 @@ function SuccessContent() {
 
   return (
     <div className="p-10">
-      Activating subscription...
+      Activating subscription.....
     </div>
   );
 }

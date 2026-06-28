@@ -42,21 +42,22 @@ export default function RegisterForm() {
 
   return (
     <section className="min-h-screen bg-background">
-      <div className="container mx-auto px-6 py-10">
-        <div className="grid lg:grid-cols-2 gap-10 items-center min-h-[90vh]">
-          <div className="hidden lg:flex flex-col justify-between rounded-3xl p-10 text-white bg-gradient-to-br from-violet-700 via-indigo-700 to-sky-600 relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[90vh]">
+
+        <div className="hidden lg:flex flex-col justify-between rounded-[32px] xl:rounded-[40px] p-8 xl:p-10 text-white bg-gradient-to-br from-indigo-900 via-teal-900 to-teal-600 relative overflow-hidden min-h-[720px]">
             <div className="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-cyan-400/30 blur-3xl" />
 
             <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
             <div className="relative z-10">
-              <h2 className="text-5xl font-bold">
+              <h2 className="text-4xl xl:text-5xl font-bold leading-tight">
                 Build • Share • Sell
                 <br />
                 AI Prompts
               </h2>
 
-              <p className="mt-6 text-white/80">
+              <p className="mt-5 text-base xl:text-lg text-white/80">
                 Discover premium AI prompts and grow as creator.
               </p>
             </div>
@@ -71,8 +72,8 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          <div className="w-full max-w-xl mx-auto border rounded-3xl p-8 shadow-2xl">
-            <h1 className="text-4xl font-bold">
+          <div className="w-full max-w-xl mx-auto border rounded-[28px] sm:rounded-[36px] p-5 sm:p-8 shadow-2xl">
+           <h1 className="text-3xl sm:text-4xl font-bold">
               Create Account
             </h1>
 
@@ -96,9 +97,9 @@ export default function RegisterForm() {
               <button
                 type="button"
                 onClick={() => setRole("user")}
-                className={`h-12 rounded-xl ${
+                className={`h-11 sm:h-12 rounded-xl text-sm sm:text-base ${
                   role === "user"
-                    ? "bg-violet-600 text-white"
+                    ? "bg-teal-600 text-white"
                     : "border"
                 }`}
               >
@@ -110,7 +111,7 @@ export default function RegisterForm() {
                 onClick={() => setRole("creator")}
                 className={`h-12 rounded-xl ${
                   role === "creator"
-                    ? "bg-violet-600 text-white"
+                    ? "bg-teal-600 text-white"
                     : "border"
                 }`}
               >
@@ -123,43 +124,43 @@ export default function RegisterForm() {
               className="space-y-5"
             >
               <div className="relative">
-                <User className="absolute left-4 top-4 w-5" />
+                <User className="absolute left-3 sm:left-4 top-3.5 sm:top-4 w-5 h-5"/>
 
                 <input
                   name="name"
                   placeholder="Full Name"
-                  className="w-full h-12 border rounded-xl pl-12"
+                  className="w-full h-11 sm:h-12 border rounded-xl pl-11 sm:pl-12 text-sm sm:text-base"
                 />
               </div>
 
               <div className="relative">
-                <Image className="absolute left-4 top-4 w-5" />
+                <Image className="absolute left-3 sm:left-4 top-3.5 sm:top-4 w-5 h-5"/>
 
                 <input
                   name="imgUrl"
                   placeholder="Photo URL"
-                  className="w-full h-12 border rounded-xl pl-12"
+                  className="w-full h-11 sm:h-12 border rounded-xl pl-11 sm:pl-12 text-sm sm:text-base"
                 />
               </div>
 
               <div className="relative">
-                <Mail className="absolute left-4 top-4 w-5" />
+                <Mail className="absolute left-3 sm:left-4 top-3.5 sm:top-4 w-5 h-5"/>
 
                 <input
                   name="email"
                   placeholder="Email"
-                  className="w-full h-12 border rounded-xl pl-12"
+                  className="w-full h-11 sm:h-12 border rounded-xl pl-11 sm:pl-12 text-sm sm:text-base"
                 />
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-4 top-4 w-5" />
+                <Lock className="absolute left-3 sm:left-4 top-3.5 sm:top-4 w-5 h-5"/>
 
                 <input
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  className="w-full h-12 border rounded-xl pl-12 pr-12"
+                  className="w-full h-11 sm:h-12 border rounded-xl pl-11 sm:pl-12 pr-11 sm:pr-12 text-sm sm:text-base"
                 />
 
                 <button
@@ -167,23 +168,23 @@ export default function RegisterForm() {
                   onClick={() =>
                     setShowPassword(!showPassword)
                   }
-                  className="absolute right-4 top-3"
+                  className="absolute right-3 sm:right-4 top-3"
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
               </div>
 
-              <button className="w-full h-12 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white">
+              <button className="w-full h-11 sm:h-12 rounded-xl bg-gradient-to-r from-teal-600 to-teal-600 text-white font-semibold transition hover:opacity-90">
                 Create Account
               </button>
             </form>
 
-            <p className="text-center mt-6">
+            <p className="mt-6 text-center text-sm sm:text-base">
               Already have account?
 
               <Link
                 href="/login"
-                className="ml-2 text-violet-600"
+                className="ml-2 text-cyan-700 font-bold"
               >
                 Sign In
               </Link>

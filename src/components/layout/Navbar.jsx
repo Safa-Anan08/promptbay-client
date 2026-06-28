@@ -25,6 +25,9 @@ export default function Navbar() {
   useEffect(() => {
     setMounted(true);
   }, []);
+   useEffect(() => {
+  setOpen(false);
+}, [pathname]);
 
   const logout = async () => {
     await axiosInstance.post("/auth/logout");
@@ -61,29 +64,32 @@ export default function Navbar() {
   const isDark = theme === "dark";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-5 pt-5">
+    <header className="fixed inset-x-0 top-0 z-50 overflow-x-hidden">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-5 pt-3 md:pt-5">
 
         <div className="rounded-3xl border border-border bg-background/60 backdrop-blur-2xl shadow-xl">
 
-          <div className="h-20 flex items-center justify-between px-6 md:px-8">
+          <div className="h-16 md:h-20 flex items-center justify-between px-4 md:px-8">
 
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3 min-w-0">
 
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 flex items-center justify-center text-white">
                 <Sparkles size={20} />
               </div>
 
-              <div>
-                <h2 className="font-black text-2xl">PromptBay</h2>
-                <p className="text-xs opacity-60">
+              <div className=" sm:block">
+             <h2 className="font-black text-xl md:text-2xl">
+             PromptBay
+            </h2>
+
+                <p className="text-[10px] md:text-xs opacity-60">
                   Premium AI Prompt Marketplace
                 </p>
               </div>
 
             </Link>
 
-            <nav className="hidden md:flex gap-8 text-sm">
+            <nav className="hidden md:flex items-center gap-5 lg:gap-8 text-sm">
               {links.map((link) => (
                 <Link
                   key={link.name}
@@ -141,7 +147,10 @@ export default function Navbar() {
               )}
 
             </div>  
-            <button className="md:hidden" onClick={() => setOpen(!open)}>
+            <button
+  className="md:hidden p-2 rounded-xl border border-border"
+  onClick={() => setOpen(!open)}
+>
               {open ? <X /> : <Menu />}
             </button>
 

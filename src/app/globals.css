@@ -1,29 +1,7 @@
 @import "tailwindcss";
 
 
-:root {
-
-  --background: #f8f4ec;
-  --foreground: #2a2927;
-
-  --card: #fffdf9;
-  --glass: rgba(255, 255, 255, 0.75);
-
-  --border: rgba(229, 218, 198, 0.9);
-
-  --muted: #7a746b;
-
-  --primary: #2f7a56;
-  --secondary: #68ae81;
-
-  --accent: #c69b52;
-
-  --shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
-
-}
-
-
-.dark {
+.root {
 
   --background: #04130e;
   --foreground: #f6f7f4;
@@ -44,6 +22,27 @@
 
 }
 
+
+.light {
+
+  --background: #f8f4ec;
+  --foreground: #2a2927;
+
+  --card: #fffdf9;
+  --glass: rgba(255, 255, 255, 0.75);
+
+  --border: rgba(229, 218, 198, 0.9);
+
+  --muted: #7a746b;
+
+  --primary: #2f7a56;
+  --secondary: #68ae81;
+
+  --accent: #c69b52;
+
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+
+}
 @import "tailwindcss";
 
 :root{
@@ -96,6 +95,41 @@ background-repeat:no-repeat;
 
 background-attachment:fixed;
 
+}
+html,
+body{
+  margin:0;
+  min-height:100%;
+  width:100%;
+  overflow-x:hidden;
+
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-attachment:fixed;
+}
+
+body{
+  color:var(--foreground);
+}
+
+html.light body{
+  background:
+  url("/images/light.webp") center/cover no-repeat,
+
+  radial-gradient(circle at 10% 10%, #fff7ea, transparent 40%),
+  radial-gradient(circle at 90% 0%, #efe1c7, transparent 45%),
+  linear-gradient(135deg,#fbf7f1,#f3ecdf);
+}
+
+html.dark body{
+  background:
+  url("/images/dark.jpg") center/cover no-repeat,
+
+  radial-gradient(circle at 10% 10%, rgba(192,215,205,.25), transparent 40%),
+  radial-gradient(circle at 90% 20%, rgba(217,182,109,.12), transparent 45%),
+  radial-gradient(circle at 50% 100%, rgba(0,30,20,.6), transparent 60%),
+
+  linear-gradient(135deg,#04130e,#071a14);
 }
 html,
 body{
@@ -238,3 +272,11 @@ html.body.dark {
   -webkit-text-fill-color: transparent;
 }
 
+.scrollbar-hide::-webkit-scrollbar{
+display:none;
+}
+
+.scrollbar-hide{
+-ms-overflow-style:none;
+scrollbar-width:none;
+}

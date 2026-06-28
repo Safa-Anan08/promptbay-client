@@ -1,12 +1,9 @@
+
 "use client";
 
 import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
+  ResponsiveContainer, PieChart,
+  Pie, Cell, Tooltip, Legend,
 } from "recharts";
 
 const data = [
@@ -36,77 +33,53 @@ const colors = [
 ];
 
 export default function SalesCategoryChart() {
-
   return (
-
-    <div className="glass-card rounded-[32px] p-7 h-full">
-
-      <div className="flex items-center justify-between">
-
+    <div className="glass-card w-full min-w-0 rounded-2xl sm:rounded-[32px] border border-border p-4 sm:p-6 lg:p-7">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-
-          <h2 className="text-2xl font-black">
+          <h2 className="text-xl sm:text-2xl font-black">
             Sales by Category
           </h2>
 
-          <p className="text-muted-foreground mt-1">
+          <p className="mt-1 text-sm sm:text-base text-muted-foreground">
             Last 30 Days
           </p>
-
         </div>
-
       </div>
 
-      <div className="h-[320px] mt-6">
-
-        <ResponsiveContainer width="100%" height="100%">
-
+      <div className="mt-6 w-full min-w-0 h-[260px] sm:h-[320px]">
+  <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-
             <Pie
               data={data}
               dataKey="value"
-              innerRadius={70}
-              outerRadius={105}
+              innerRadius={45}
+              outerRadius={75}
               paddingAngle={4}
             >
-
-              {
-
-                data.map(
-                  (
-                    item,
-                    index
-                  )=>(
-
-                    <Cell
-                      key={item.name}
-                      fill={colors[index]}
-                    />
-
-                  )
-                )
-
-              }
-
+              {data.map((item, index) => (
+                <Cell
+                  key={item.name}
+                  fill={colors[index]}
+                />
+              ))}
             </Pie>
 
             <Tooltip />
 
             <Legend
-              verticalAlign="middle"
-              align="right"
-              layout="vertical"
+              verticalAlign="bottom"
+              align="center"
+              layout="horizontal"
+              wrapperStyle={{
+                fontSize: "12px",
+                paddingTop: "10px",
+              }}
             />
-
           </PieChart>
-
         </ResponsiveContainer>
-
       </div>
-
     </div>
-
   );
-
 }
+

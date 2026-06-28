@@ -32,7 +32,7 @@ export default function ProtectedRoute({
 
         router.replace("/");
 
-      }, 70000);
+      }, 3000);
 
       return () => clearTimeout(timer);
 
@@ -80,18 +80,13 @@ export default function ProtectedRoute({
     return (
 
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-xl">
-
         <div className="glass-card w-[420px] rounded-[36px] p-10 text-center shadow-2xl">
-
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-500/10">
-
             <ShieldAlert
               size={52}
               className="text-red-500"
             />
-
           </div>
-
           <h2 className="mt-8 text-4xl font-black">
 
             Oops!
@@ -99,9 +94,7 @@ export default function ProtectedRoute({
           </h2>
 
           <p className="mt-4 text-lg text-muted-foreground">
-
             You don't have permission to access this page.
-
             <br />
 
             Redirecting to Home...

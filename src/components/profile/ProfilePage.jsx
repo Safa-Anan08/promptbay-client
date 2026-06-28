@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
 import { User, Mail, Shield, Crown, Camera, Sparkles } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 export default function ProfilePage() {
+  const router = useRouter();
   const [profile, setProfile] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -82,17 +83,17 @@ export default function ProfilePage() {
   if (!profile) return <div className="p-10">Loading...</div>;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-10">
+    <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 lg:px-0 space-y-6 sm:space-y-10">
 
   
-      <div className="rounded-[40px] bg-gradient-to-br from-emerald-600 via-cyan-600 to-blue-700 p-10 text-white relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-white/10 rounded-full blur-3xl" />
+    <div className="relative overflow-hidden rounded-[28px] sm:rounded-[40px] bg-gradient-to-br from-emerald-600 via-cyan-600 to-blue-700 px-5 py-8 sm:p-8 lg:p-10 text-white">
+       <div className="absolute -right-10 -top-10 h-48 w-48 sm:h-[320px] sm:w-[320px] bg-white/10 rounded-full blur-3xl" />
 
-        <div className="flex gap-10 items-center relative">
+        <div className="relative flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-10 text-center lg:text-left">
           <div className="relative">
             <img
-              src={profile.imgUrl || "https://placehold.co/300"}
-              className="w-44 h-44 rounded-[40px] object-cover border-4 border-white/20"
+             src={ profile.imgUrl || profile.avatar || "https://placehold.co/300"}
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 rounded-[28px] sm:rounded-[40px] object-cover border-4 border-white/20"
             />
 
             <label className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-black flex items-center justify-center cursor-pointer">
@@ -104,10 +105,10 @@ export default function ProfilePage() {
           <div>
             <div className="flex gap-2"><Sparkles /> Premium Profile</div>
 
-            <h1 className="text-5xl font-black mt-5">{profile.name}</h1>
+            <h1 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-black">{profile.name}</h1>
             <p className="mt-4">{profile.email}</p>
 
-            <div className="mt-6 flex gap-3 flex-wrap">
+            <div className="mt-6 flex flex-wrap justify-center lg:justify-start gap-3">
               <span className="px-5 py-2 rounded-full bg-white/10 flex gap-2 items-center">
                 <Shield size={18} /> {profile.role}
               </span>
@@ -131,8 +132,8 @@ export default function ProfilePage() {
       </div>
 
    
-      <div className="rounded-[35px] border bg-card p-8">
-        <div className="flex justify-between">
+     <div className="rounded-[28px] sm:rounded-[35px] border bg-card p-5 sm:p-8">
+        <div className="flex flex-col sm:flex-row gap-5 sm:items-center sm:justify-between">
           <div>
             <p className="opacity-60">Current Subscription</p>
             <h2 className="text-4xl font-black mt-2 uppercase">
@@ -141,7 +142,7 @@ export default function ProfilePage() {
           </div>
 
           <div
-            className={`px-6 py-3 rounded-full font-semibold ${
+            className={`w-fit px-5 py-3 rounded-full font-semibold ${
               profile.subscription?.status === "active"
                 ? "bg-emerald-500/20 text-emerald-600"
                 : "bg-red-500/20 text-red-500"
@@ -151,7 +152,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <div>
             <p className="opacity-60">Start</p>
             <h3 className="mt-2 text-xl">
@@ -177,27 +178,35 @@ export default function ProfilePage() {
             </h3>
           </div>
         </div>
+        <div className="mt-10 flex justify-end">
+         <button
+           onClick={() => router.push("/pricing")}
+           className="btn-primary"
+          >
+           Change Plan
+          </button>
+  </div>
       </div>
 
    
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
 
      
-        <div className="rounded-[35px] border bg-card p-8">
-          <h2 className="text-3xl font-black">Edit Profile</h2>
+        <div className="rounded-[28px] sm:rounded-[35px] border bg-card p-5 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-black">Edit Profile</h2>
 
           <div className="mt-8 space-y-5">
             <input className="w-full p-5 rounded-3xl border" value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })} />
 
-            <input disabled className="w-full p-5 rounded-3xl border opacity-60"
+            <input disabled className="w-full rounded-2xl sm:rounded-3xl border p-4 sm:p-5 text-sm sm:text-base opacity-60"
               value={profile.email} />
 
             <input className="w-full p-5 rounded-3xl border"
               value={form.profession}
               onChange={(e) => setForm({ ...form, profession: e.target.value })} />
 
-            <textarea className="w-full h-40 p-5 rounded-3xl border"
+            <textarea className="w-full h-36 sm:h-40 rounded-2xl sm:rounded-3xl border p-4 sm:p-5 text-sm sm:text-base"
               value={form.bio}
               onChange={(e) => setForm({ ...form, bio: e.target.value })} />
 
@@ -208,16 +217,16 @@ export default function ProfilePage() {
         </div>
 
   
-        <div className="rounded-[35px] border bg-card p-8">
-          <h2 className="text-3xl font-black">Change Password</h2>
+       <div className="rounded-[28px] sm:rounded-[35px] border bg-card p-5 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-black">Change Password</h2>
 
           <div className="mt-8 space-y-5">
-            <input type="password" className="w-full p-5 rounded-3xl border"
+            <input type="password" className="w-full rounded-2xl sm:rounded-3xl border p-4 sm:p-5 text-sm sm:text-base"
               placeholder="Current Password"
               value={password.currentPassword}
               onChange={(e) => setPassword({ ...password, currentPassword: e.target.value })} />
 
-            <input type="password" className="w-full p-5 rounded-3xl border"
+            <input type="password" className="w-full rounded-2xl sm:rounded-3xl border p-4 sm:p-5 text-sm sm:text-base"
               placeholder="New Password"
               value={password.newPassword}
               onChange={(e) => setPassword({ ...password, newPassword: e.target.value })} />

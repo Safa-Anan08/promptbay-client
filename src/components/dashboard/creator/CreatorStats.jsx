@@ -1,8 +1,11 @@
 "use client";
 
 import {
-  FileText, ShoppingCart, DollarSign,
-  Star, TrendingUp,
+  FileText,
+  ShoppingCart,
+  DollarSign,
+  Star,
+  TrendingUp,
 } from "lucide-react";
 
 export default function CreatorStats() {
@@ -38,30 +41,30 @@ export default function CreatorStats() {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-6 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.title}
-          className="glass-card rounded-[28px] border  border-border  p-6  transition-all  duration-300  hover:-translate-y-1  hover:border-emerald-500/30  hover:shadow-[0_20px_60px_rgba(16,185,129,.12)] "
+          className="glass-card rounded-2xl sm:rounded-[28px] border border-border p-4 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:shadow-[0_20px_60px_rgba(16,185,129,.12)]"
         >
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-3">
             <div
-              className={` flex h-14 w-14  items-center  justify-center  rounded-2xl  bg-gradient-to-r  ${card.color}  text-white  shadow-lg `}
+              className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-r ${card.color} text-white shadow-lg shrink-0`}
             >
               {card.icon}
             </div>
 
-            <div className="flex items-center gap-1 text-sm font-semibold text-emerald-500">
-              <TrendingUp size={15} />
+            <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-emerald-500">
+              <TrendingUp size={14} />
               {card.change}
             </div>
           </div>
 
-          <p className="mt-6 text-muted-foreground">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base text-muted-foreground">
             {card.title}
           </p>
 
-          <h2 className="mt-2 text-4xl font-black">
+          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-black break-words">
             {card.value}
           </h2>
         </div>

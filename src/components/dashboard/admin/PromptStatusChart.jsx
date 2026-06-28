@@ -56,20 +56,20 @@ export default function PromptStatusChart() {
   ];
 
   return (
-    <div className="glass-card rounded-[32px] p-7">
+    <div className="glass-card w-full min-w-0 rounded-2xl sm:rounded-[32px] border border-border p-4 sm:p-6 lg:p-7">
       <h2 className="text-2xl font-black">
         Prompt Status
       </h2>
 
-      <div className="mt-8 h-80">
-        <ResponsiveContainer>
+      <div className="mt-6 w-full min-w-0 h-[260px] sm:h-[320px]">
+        <ResponsiveContainer width="100%" height="100%">
           <RePieChart>
             <Pie
-              data={data}
-              dataKey="value"
-              nameKey="name"
-              innerRadius={70}
-              outerRadius={110}
+             data={data}
+            dataKey="value"
+            nameKey="name"
+             innerRadius={45}
+             outerRadius={75}
             >
               {data.map((item, index) => (
                 <Cell

@@ -6,39 +6,62 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 
+import {
+  Sparkles,  Search,
+  Lock,  LockOpen,
+  Star,  Copy,  Crown,
+} from "lucide-react";
 function PromptsContent() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [showUpgrade, setShowUpgrade] = useState(false);
-
   const { user } = useAuth();
-
   const router = useRouter();
-
   const searchParams = useSearchParams();
-
   const category = searchParams.get("category") || "";
+  const visiblePrompts = user ? data : data.slice(0, 8);
+ const [page, setPage] = useState(1);
 
-  const visiblePrompts = user ? data : data.slice(0, 6);
+const [totalPages, setTotalPages] =
+  useState(1);
 
-  const load = async () => {
-    try {
-      const res = await axiosInstance.get("/prompts", {
-        params: {
-          search,
-          category,
-        },
-      });
+const load = async (currentPage = page) => {
+  try {
+    const res =
+      await axiosInstance.get(
+        "/prompts",
+        {
+          params: {
+            search,
+            category,
+            page: currentPage,
+            limit:9,
+          },
+        }
+      );
 
-      setData(res.data.prompts || []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    setData(
+      res.data.prompts || []
+    );
 
-  useEffect(() => {
-    load();
-  }, [category]);
+    setTotalPages(
+      res.data.pagination
+        ?.totalPages || 1
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+
+useEffect(() => {
+  load(page);
+}, [
+  category,
+  page,search
+]);
 
   const canAccessPremium = () => {
     const plan = user?.subscription?.plan?.toLowerCase();
@@ -97,11 +120,14 @@ function PromptsContent() {
           </div>
 
           <button
-            onClick={load}
-            className="px-8 py-4 rounded-2xl bg-black text-white"
-          >
-            Search
-          </button>
+  onClick={() => {
+    setPage(1);
+    load(1);
+  }}
+  className="px-8 py-4 rounded-2xl bg-black text-white"
+>
+  Search
+</button>
         </div>
       </div>
 
@@ -183,7 +209,35 @@ function PromptsContent() {
           );
         })}
       </div>
+    
 
+    <div className="flex justify-center gap-4 mt-14">
+
+      <button
+        disabled={page === 1}
+      onClick={() =>
+            setPage(page - 1)
+          }
+          className="px-5 py-3 border rounded-xl disabled:opacity-40">
+          Prev
+        </button>
+
+            <div className="px-5 py-3">
+              Page {page} / {totalPages}
+               </div>
+
+         <button
+             disabled={
+               page >= totalPages
+                }
+           onClick={() =>
+             setPage(page + 1)
+              }
+            className="px-5 py-3 border rounded-xl disabled:opacity-40">
+            Next
+          </button>
+
+         </div>
       {showUpgrade && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
           <div className="bg-white rounded-[40px] p-10 w-[500px] text-center">

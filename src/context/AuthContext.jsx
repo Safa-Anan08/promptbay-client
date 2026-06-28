@@ -1,74 +1,50 @@
 "use client";
 
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
+  createContext,useContext,useEffect,useState,
 } from "react";
-
 import axiosInstance from "@/lib/axios";
 
 const AuthContext = createContext();
-
 export function AuthProvider({ children }) {
-
   const [user, setUser] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
+  
   const loadUser = async () => {
+  try {
+    const res = await axiosInstance.get("/auth/me", {
+      withCredentials: true,
+    });
 
-    try {
+    setUser(res.data.user);
 
-      const res = await axiosInstance.get("/auth/me");
+  } catch (err) {
+    console.log("AUTH ERROR:", err?.response?.data);
 
-      setUser(res.data.user);
+    setUser(null);
 
-    } catch {
-
-      setUser(null);
-
-    } finally {
-
-      setLoading(false);
-
-    }
-
-  };
-
+  } finally {
+    setLoading(false);
+  }
+};
   useEffect(() => {
-
     loadUser();
-
   }, []);
 
   return (
-
     <AuthContext.Provider
 
       value={{
-
         user,
-
-        setUser,
-
+       setUser,
         loading,
-
         fetchUser: loadUser,
-
         reload: loadUser,
-
       }}
-
     >
-
       {children}
-
     </AuthContext.Provider>
-
   );
-
 }
 
 export const useAuth = () => useContext(AuthContext);

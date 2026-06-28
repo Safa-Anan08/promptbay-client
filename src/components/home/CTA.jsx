@@ -8,7 +8,7 @@ export default function CTA() {
   const { user } = useAuth();
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
+    <section className="mx-auto max-w-7xl px-6 py-2">
       <div className="glass-card relative overflow-hidden rounded-[40px] border border-border px-8 py-20 text-center lg:px-20">
 
         <div className="hero-glow-green absolute -top-24 -left-32" />

@@ -11,6 +11,7 @@ export default function LoginPage() {
   const { fetchUser } = useAuth();
 
   const handleSubmit = async (e) => {
+    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
     e.preventDefault();
 
     const form = new FormData(e.target);

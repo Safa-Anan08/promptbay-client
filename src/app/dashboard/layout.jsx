@@ -13,24 +13,20 @@ export default function DashboardLayout({
   return (
     <ProtectedRoute>
       <div className="flex">
-        <div className="hidden lg:block">
+        <div className="hidden lg:block shrink-0">
           <Sidebar />
         </div>
 
+        <div className="flex-1 min-w-0 overflow-x-hidden">
+          {user && <DashboardTabs role={user.role} />}
 
-        <div className="flex-1">
-
-          {user && (
-            <DashboardTabs role={user.role} />
-          )}
-
-          <div className="p-6 lg:p-10">
+          <main className="w-full min-w-0 px-3 py-4 sm:px-5 lg:px-8 xl:px-10 lg:py-8">
             {children}
-          </div>
-
+          </main>
         </div>
-
       </div>
+      
     </ProtectedRoute>
   );
 }
+

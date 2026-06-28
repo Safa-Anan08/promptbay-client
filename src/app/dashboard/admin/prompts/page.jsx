@@ -15,24 +15,35 @@ export default function PromptTable() {
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
+  const [page, setPage] = useState(1);
 
+   const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
-    load();
-  }, []);
+  load(page);
+}, [page]);
 
-  const load = async () => {
-    try {
-      setLoading(true);
+const load = async (currentPage = page) => {
+  try {
+    setLoading(true);
 
-      const res = await axiosInstance.get("/prompts/admin/all");
+    const res =
+      await axiosInstance.get(
+        `/prompts/admin/all?page=${currentPage}&limit=8`
+      );
 
-      setData(res.data.prompts || []);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setData(
+      res.data.prompts || []
+    );
+
+    setTotalPages(
+      res.data.pagination?.totalPages || 1
+    );
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const approve = async (id) => {
     try {
@@ -378,6 +389,31 @@ export default function PromptTable() {
 
       </div>
 
+     <div className="flex justify-center items-center gap-3 mt-10">
+
+     <button
+        disabled={page===1}
+       onClick={()=>
+       setPage(page-1)
+       }
+      className="px-5 py-3 rounded-2xl border disabled:opacity-40">
+         Previous
+        </button>
+
+     <div className="glass-card px-6 py-3 rounded-2xl">
+      {page} / {totalPages}
+       </div>
+
+    <button
+     disabled={page===totalPages}
+     onClick={()=>
+      setPage(page+1)
+     }
+    className="px-5 py-3 rounded-2xl border disabled:opacity-40">
+    Next
+      </button>
+
+</div>
     </div>
   );
 }
