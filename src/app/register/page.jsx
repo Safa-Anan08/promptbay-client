@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, User, Image } from "lucide-react";
+import { Sparkles,Rocket, Crown, TrendingUp,Eye, EyeOff, Mail, Lock, User, Image } from "lucide-react";
 import GoogleButton from "@/components/GoogleButton";
 
 export default function RegisterForm() {
@@ -44,33 +44,62 @@ export default function RegisterForm() {
     <section className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[90vh]">
+<div className="hidden lg:flex flex-col justify-center gap-20 rounded-[32px] xl:rounded-[40px] p-8 xl:p-10 text-white bg-gradient-to-br from-indigo-900 via-teal-900 to-teal-600 relative overflow-hidden min-h-[720px]">
 
-        <div className="hidden lg:flex flex-col justify-between rounded-[32px] xl:rounded-[40px] p-8 xl:p-10 text-white bg-gradient-to-br from-indigo-900 via-teal-900 to-teal-600 relative overflow-hidden min-h-[720px]">
-            <div className="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-cyan-400/30 blur-3xl" />
+  <div className="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-cyan-400/30 blur-3xl" />
 
-            <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-fuchsia-500/20 blur-3xl" />
+  <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
-            <div className="relative z-10">
-              <h2 className="text-4xl xl:text-5xl font-bold leading-tight">
-                Build • Share • Sell
-                <br />
-                AI Prompts
-              </h2>
+  <div className="relative z-10">
+    <h2 className="text-4xl xl:text-5xl font-bold leading-tight">
+      Build • Share • Sell
+      <br />
+      AI Prompts
+    </h2>
 
-              <p className="mt-5 text-base xl:text-lg text-white/80">
-                Discover premium AI prompts and grow as creator.
-              </p>
-            </div>
+    <p className="mt-5 text-base xl:text-lg text-white/80">
+      Discover premium AI prompts and grow as creator.
+    </p>
+  </div>
 
-            <div className="relative z-10 bg-white/10 rounded-2xl p-6 backdrop-blur">
-              <ul className="space-y-3">
-                <li>✨ Discover Prompts</li>
-                <li>🚀 Become Creator</li>
-                <li>💎 Premium Access</li>
-                <li>📈 Build Audience</li>
-              </ul>
-            </div>
-          </div>
+  <div className="relative z-10 rounded-3xl bg-white/10 p-7 backdrop-blur-xl max-w-md">
+
+    <ul className="space-y-5">
+
+      <li className="flex items-center gap-4">
+        <div className="rounded-2xl bg-white/10 p-3">
+          <Sparkles size={20} />
+        </div>
+
+        <span>Discover Prompts</span>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <div className="rounded-2xl bg-white/10 p-3">
+          <Rocket size={20} />
+        </div>
+
+        <span>Become Creator</span>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <div className="rounded-2xl bg-white/10 p-3">
+          <Crown size={20} />
+        </div>
+
+        <span>Premium Access</span>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <div className="rounded-2xl bg-white/10 p-3">
+          <TrendingUp size={20} />
+        </div>
+
+        <span>Build Audience</span>
+      </li>
+    </ul>
+  </div>
+</div>
 
           <div className="w-full max-w-xl mx-auto border rounded-[28px] sm:rounded-[36px] p-5 sm:p-8 shadow-2xl">
            <h1 className="text-3xl sm:text-4xl font-bold">

@@ -75,7 +75,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="mt-32 border-t border-border bg-background/60 backdrop-blur-xl">
+    <footer className="mt-5 border-t border-border bg-background/60 backdrop-blur-xl">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-3">
         <div>
           <h2 className="gradient-text text-3xl font-black">

@@ -60,93 +60,107 @@ export default function ComparisonTable() {
 
       </div>
 
-      <div className="rounded-3xl md:rounded-[40px] border backdrop-blur-xl overflow-hidden">
+      <div className="rounded-2xl sm:rounded-3xl md:rounded-[40px] border backdrop-blur-xl overflow-hidden">
 
-        <div className="overflow-x-auto">
+  <div className="overflow-x-auto">
 
-          <table className="w-full min-w-[700px]">
+    <table className="w-full min-w-[560px] lg:min-w-full">
 
-            <thead>
+      <thead>
 
-              <tr className="bg-black text-white">
+        <tr className="bg-black text-white">
 
-                <th className="text-left px-4 py-5 md:p-8 text-sm md:text-base">
-                  Feature
-                </th>
+          <th className="sticky left-0 z-20 bg-black text-left px-3 py-4 sm:px-5 md:p-8 text-xs sm:text-sm md:text-base whitespace-nowrap">
 
-                <th className="px-4 py-5 text-sm md:text-base">
-                  Free
-                </th>
+            Feature
 
-                <th className="px-4 py-5 bg-gradient-to-r from-violet-600 to-fuchsia-600">
+          </th>
 
-                  <div className="flex justify-center items-center gap-2 text-sm md:text-base">
-                    <Rocket size={16} />
-                    Pro
-                  </div>
+          <th className="px-3 py-4 sm:px-5 text-xs sm:text-sm md:text-base whitespace-nowrap">
+            Free
+          </th>
 
-                </th>
+          <th className="px-3 py-4 sm:px-5 bg-gradient-to-r from-violet-600 to-fuchsia-600">
 
-                <th className="px-4 py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-sm md:text-base">
-                  Growth
-                </th>
+            <div className="flex justify-center items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base whitespace-nowrap">
 
-                <th className="px-4 py-5 bg-gradient-to-r from-yellow-500 to-orange-500">
+              <Rocket size={14} />
 
-                  <div className="flex justify-center items-center gap-2 text-sm md:text-base">
-                    <Crown size={16} />
-                    Premium
-                  </div>
+              <span>Pro</span>
 
-                </th>
+            </div>
 
-              </tr>
+          </th>
 
-            </thead>
+          <th className="px-3 py-4 sm:px-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-xs sm:text-sm md:text-base whitespace-nowrap">
 
-            <tbody>
+            Growth
 
-              {rows.map((row, index) => (
-                <tr
-                  key={row.feature}
-                  className={`
-                    border-b
-                    hover:bg-white/5
-                    transition
-                    ${index % 2 === 0 ? "bg-muted/20" : ""}
-                  `}
-                >
+          </th>
 
-                  <td className="px-4 py-5 md:p-8 font-semibold text-sm md:text-base">
-                    {row.feature}
-                  </td>
+          <th className="px-3 py-4 sm:px-5 bg-gradient-to-r from-yellow-500 to-orange-500">
 
-                  <td className="text-center">
-                    <Cell value={row.free} />
-                  </td>
+            <div className="flex justify-center items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base whitespace-nowrap">
 
-                  <td className="text-center">
-                    <Cell value={row.pro} />
-                  </td>
+              <Crown size={14} />
 
-                  <td className="text-center">
-                    <Cell value={row.growth} />
-                  </td>
+              <span>Premium</span>
 
-                  <td className="text-center">
-                    <Cell value={row.premium} />
-                  </td>
+            </div>
 
-                </tr>
-              ))}
+          </th>
 
-            </tbody>
+        </tr>
 
-          </table>
+      </thead>
 
-        </div>
+      <tbody>
 
-      </div>
+        {rows.map((row, index) => (
+
+          <tr
+            key={row.feature}
+            className={`
+              border-b
+              hover:bg-white/5
+              transition
+              ${index % 2 === 0 ? "bg-muted/20" : ""}
+            `}
+          >
+
+            <td className="sticky left-0 z-10 bg-background px-3 py-4 sm:px-5 md:p-8 font-semibold text-xs sm:text-sm md:text-base min-w-[160px]">
+
+              {row.feature}
+
+            </td>
+
+            <td className="text-center px-2 py-4">
+              <Cell value={row.free} />
+            </td>
+
+            <td className="text-center px-2 py-4">
+              <Cell value={row.pro} />
+            </td>
+
+            <td className="text-center px-2 py-4">
+              <Cell value={row.growth} />
+            </td>
+
+            <td className="text-center px-2 py-4">
+              <Cell value={row.premium} />
+            </td>
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
 
       <p className="md:hidden text-center text-xs opacity-50 mt-3">
         ← Swipe horizontally →

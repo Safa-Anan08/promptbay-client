@@ -21,71 +21,128 @@ const [reportReason,setReportReason]=useState("");
 
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
+const [bookmarked, setBookmarked] = useState(false);
+const [copied, setCopied] = useState(false);
+useEffect(() => {
+  if (id) {
+    load();
+  }
+}, [id]);
+const load = async () => {
+  try {
+    const [promptRes, reviewRes] =
+      await Promise.all([
+        axiosInstance.get(
+          `/prompts/details/${id}`
+        ),
 
-  useEffect(() => {
-    if (id) load();
-  }, [id]);
-
-  const load = async () => {
-    try {
-      const [promptRes, reviewRes] = await Promise.all([
-        axiosInstance.get(`/prompts/details/${id}`),
-        axiosInstance.get(`/prompts/reviews/${id}`),
+        axiosInstance.get(
+          `/prompts/reviews/${id}`
+        ),
       ]);
 
-      setData(promptRes.data.prompt);
-      setAccess(promptRes.data.canAccess);
-      setReviews(reviewRes.data.reviews || []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const prompt =
+      promptRes.data.prompt;
 
-  const copyPrompt = async () => {
-    try {
-      await axiosInstance.post(`/copies/${data._id}`);
+    setData(prompt);
 
-      await navigator.clipboard.writeText(data.content);
+    setAccess(
+      promptRes.data.canAccess
+    );
 
-      setData((prev) => ({
-        ...prev,
-        copyCount: (prev.copyCount || 0) + 1,
-      }));
+    setBookmarked(
+      promptRes.data.isBookmarked || false
+    );
 
-      toast.success("Prompt copied successfully!");
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Failed to copy prompt"
-      );
-    }
-  };
+    setCopied(
+      promptRes.data.isCopied || false
+    );
 
-      const [bookmarked, setBookmarked] = useState(false);
+    setReviews(
+      reviewRes.data.reviews || []
+    );
 
-       useEffect(() => {
-        setBookmarked(
-         data?.isBookmarked || false
-        );
-         }, [data]);
-        const bookmark = async () => {
-         try {
+  } catch (err) {
 
-         const res =await axiosInstance.post(`/bookmarks/${id}`);
+    console.log(err);
 
-     setBookmarked(prev => !prev);
+    toast.error(
+      "Failed to load prompt"
+    );
 
-      toast.success(
-     res.data.message
-      );
-
-     } catch (err) {
-
-     toast.error(
-      err.response?.data?.message ||
-      "Failed"
-      );
   }
 };
+
+const copyPrompt = async () => {
+  try {
+
+    const res =
+      await axiosInstance.post(
+        `/copies/${id}`
+      );
+
+    if (data?.content) {
+      await navigator.clipboard.writeText(
+        data.content
+      );
+    }
+
+    setCopied(
+      res.data.copied
+    );
+
+    setData(prev => ({
+      ...prev,
+      copyCount:
+        res.data.copyCount,
+    }));
+
+    toast.success(
+      res.data.message
+    );
+
+  } catch (err) {
+
+    toast.error(
+      err.response?.data?.message ||
+      "Copy failed"
+    );
+
+  }
+};
+
+const bookmark = async () => {
+  try {
+
+    const res =
+      await axiosInstance.post(
+        `/bookmarks/${id}`
+      );
+
+    setBookmarked(
+      res.data.bookmarked
+    );
+
+    setData(prev => ({
+      ...prev,
+      bookmarkCount:
+        res.data.bookmarkCount,
+    }));
+
+    toast.success(
+      res.data.message
+    );
+
+  } catch (err) {
+
+    toast.error(
+      err.response?.data?.message ||
+      "Bookmark failed"
+    );
+
+  }
+};
+
   const submitReview = async () => {
     if (!comment.trim()) return alert("Write a review");
 
@@ -166,24 +223,55 @@ const reportPrompt = async () => {
             </p>
 
             <div className="mt-8 flex justify-start gap-4">
-                 <button
-                   onClick={bookmark}
-                   className={`flex items-center gap-2 rounded-2xl px-8 py-4 transition
-                   ${ bookmarked ? "bg-yellow-500 text-black"
-                   : "btn-primary"
-                 }`}>
-               <Bookmark size={18} fill={ bookmarked ? "currentColor" : "none"}/>
-               { bookmarked ? "Bookmarked" : "Bookmark"}
-                </button>
+           
+
+<button
+onClick={bookmark}
+className={`flex items-center gap-2 rounded-2xl px-8 py-4 transition
+${
+bookmarked
+? "bg-yellow-500 text-black"
+: "btn-primary"
+}`}
+>
+
+<Bookmark
+size={18}
+fill={
+bookmarked
+? "currentColor"
+: "none"
+}
+/>
+
+{
+bookmarked
+? "Bookmarked"
+: "Bookmark"
+}
+
+</button>
 
               {access && (
-                <button
-                  onClick={copyPrompt}
-                  className="btn-premium flex items-center gap-2 rounded-2xl px-8 py-4"
-                >
-                  <Copy size={18} />
-                  Copy Prompt
-                </button>
+<button
+onClick={copyPrompt}
+className={`flex items-center gap-2 rounded-2xl px-8 py-4
+${
+copied
+? "bg-blue-600 text-white"
+: "btn-premium"
+}`}
+>
+
+<Copy size={18}/>
+
+{
+copied
+? "Copied"
+: "Copy Prompt"
+}
+
+</button>
               )}
             </div>
           </div>
@@ -200,9 +288,25 @@ const reportPrompt = async () => {
                 <div className="mb-8 flex items-center justify-between">
                   <h2 className="text-3xl font-black">Prompt Content</h2>
 
-                  <button onClick={copyPrompt} className="btn-primary">
-                    Copy
-                  </button>
+<button
+onClick={copyPrompt}
+className={`flex items-center gap-2 rounded-2xl px-8 py-4
+${
+copied
+? "bg-blue-600 text-white"
+: "btn-premium"
+}`}
+>
+
+<Copy size={18}/>
+
+{
+copied
+? "Copied"
+: "Copy Prompt"
+}
+
+</button>
                 </div>
 
                 <pre className="whitespace-pre-wrap leading-8">

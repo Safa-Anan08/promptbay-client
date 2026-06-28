@@ -59,10 +59,35 @@ export default function AdminPaymentsPage() {
         </p>
       </div>
 
-      <div className="rounded-[40px] overflow-hidden border bg-card backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,.08)]">
+      <div className="rounded-[28px] md:rounded-[40px] overflow-hidden border bg-card backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,.08)]">
+
+  {payments.length === 0 ? (
+
+    <div className="py-20 px-6 text-center">
+
+      <h3 className="text-2xl md:text-3xl font-black">
+        No Payments Found
+      </h3>
+
+      <p className="opacity-60 mt-2 text-sm md:text-base">
+        Transactions will appear here
+      </p>
+
+    </div>
+
+  ) : (
+
+    <>
+  
+
+      <div className="hidden lg:block overflow-x-auto">
+
         <table className="w-full">
+
           <thead>
+
             <tr className="border-b bg-muted/20">
+
               <th className="p-7 text-left">
                 User
               </th>
@@ -82,86 +107,179 @@ export default function AdminPaymentsPage() {
               <th>
                 Date
               </th>
+
             </tr>
+
           </thead>
 
           <tbody>
+
             {payments.map((item) => (
+
               <tr
                 key={item._id}
                 className="border-b hover:bg-muted/10 transition"
               >
-                <td className="p-7">
-                  <div>
-                    <h3 className="font-bold">
-                      {item.email}
-                    </h3>
 
-                    <p className="text-sm opacity-50">
-                      Customer
-                    </p>
-                  </div>
+                <td className="p-7">
+
+                  <h3 className="font-bold">
+                    {item.email}
+                  </h3>
+
+                  <p className="text-sm opacity-50">
+                    Customer
+                  </p>
+
                 </td>
 
                 <td>
+
                   <div className="flex justify-center">
+
                     <div
                       className={`flex items-center gap-3 rounded-full px-5 py-3 font-black uppercase ${badge(item.plan)}`}
                     >
                       {icon(item.plan)}
                       {item.plan}
                     </div>
+
                   </div>
+
                 </td>
 
-                <td>
-                  <div className="text-center font-black text-xl">
-                    ${item.amount}
-                  </div>
+                <td className="text-center font-black text-xl">
+                  ${item.amount}
                 </td>
 
-                <td>
-                  <div className="text-center">
-                    <div className="font-bold">
-                      {item.durationDays} days
-                    </div>
+                <td className="text-center">
 
-                    <div className="text-sm opacity-50">
-                      access
-                    </div>
+                  <div className="font-bold">
+                    {item.durationDays} days
                   </div>
+
+                  <div className="text-sm opacity-50">
+                    access
+                  </div>
+
                 </td>
 
-                <td>
-                  <div className="text-center">
-                    <div className="font-semibold">
-                      {new Date(item.createdAt).toLocaleDateString("en-GB")}
-                    </div>
+                <td className="text-center">
 
-                    <div className="text-xs opacity-50">
-                      Paid
-                    </div>
+                  <div className="font-semibold">
+                    {new Date(
+                      item.createdAt
+                    ).toLocaleDateString(
+                      "en-GB"
+                    )}
                   </div>
+
+                  <div className="text-xs opacity-50">
+                    Paid
+                  </div>
+
                 </td>
+
               </tr>
+
             ))}
 
-            {payments.length === 0 && (
-              <tr>
-                <td colSpan={5} className="text-center py-24">
-                  <h3 className="text-3xl font-black">
-                    No Payments Found
-                  </h3>
-
-                  <p className="opacity-60 mt-2">
-                    Transactions will appear here
-                  </p>
-                </td>
-              </tr>
-            )}
           </tbody>
+
         </table>
+
       </div>
+
+  
+
+      <div className="grid gap-4 p-4 lg:hidden">
+
+        {payments.map((item) => (
+
+          <div
+            key={item._id}
+            className="rounded-3xl border p-5"
+          >
+
+            <div className="flex items-start justify-between gap-4">
+
+              <div className="min-w-0">
+
+                <h3 className="font-bold break-all">
+                  {item.email}
+                </h3>
+
+                <p className="text-xs opacity-50">
+                  Customer
+                </p>
+
+              </div>
+
+              <div
+                className={`shrink-0 flex items-center gap-2 rounded-full px-4 py-2 text-xs font-black uppercase ${badge(item.plan)}`}
+              >
+                {icon(item.plan)}
+
+                {item.plan}
+
+              </div>
+
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 mt-6">
+
+              <div>
+
+                <p className="text-xs opacity-50">
+                  Amount
+                </p>
+
+                <p className="font-black">
+                  ${item.amount}
+                </p>
+
+              </div>
+
+              <div>
+
+                <p className="text-xs opacity-50">
+                  Duration
+                </p>
+
+                <p className="font-bold">
+                  {item.durationDays}d
+                </p>
+
+              </div>
+
+              <div>
+
+                <p className="text-xs opacity-50">
+                  Date
+                </p>
+
+                <p className="font-semibold text-xs">
+                  {new Date(
+                    item.createdAt
+                  ).toLocaleDateString(
+                    "en-GB"
+                  )}
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
+
+    </>
+  )}
+
+</div>
     </div>
   );
 }
