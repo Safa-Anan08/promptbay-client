@@ -11,13 +11,19 @@ export default function PromptTable() {
   const router = useRouter();
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
-  const [page, setPage] = useState(1);
+const [search, setSearch] = useState("");
+const [filter, setFilter] = useState("all");
+const [page, setPage] = useState(1);
+const [totalPages, setTotalPages] = useState(1);
 
-   const [totalPages, setTotalPages] = useState(1);
+const [stats, setStats] = useState({
+  total: 0,
+  pending: 0,
+  approved: 0,
+  rejected: 0,
+});
   useEffect(() => {
   load(page);
 }, [page]);
@@ -26,18 +32,23 @@ const load = async (currentPage = page) => {
   try {
     setLoading(true);
 
-    const res =
-      await axiosInstance.get(
+    const [promptRes, statsRes] = await Promise.all([
+      axiosInstance.get(
         `/prompts/admin/all?page=${currentPage}&limit=8`
-      );
+      ),
+      axiosInstance.get("/prompts/admin/stats"),
+    ]);
 
-    setData(
-      res.data.prompts || []
-    );
+    setData(promptRes.data.prompts || []);
 
     setTotalPages(
-      res.data.pagination?.totalPages || 1
+      promptRes.data.pagination?.totalPages || 1
     );
+
+    setStats(
+      statsRes.data.stats
+    );
+
   } catch (err) {
     console.log(err);
   } finally {
@@ -140,30 +151,6 @@ const load = async (currentPage = page) => {
       filter,
     ]);
 
-  const stats = {
-    total: data.length,
-
-    pending:
-      data.filter(
-        (i) =>
-          i.status ===
-          "pending"
-      ).length,
-
-    approved:
-      data.filter(
-        (i) =>
-          i.status ===
-          "approved"
-      ).length,
-
-    rejected:
-      data.filter(
-        (i) =>
-          i.status ===
-          "rejected"
-      ).length,
-  };
 
   return (
     <div className="space-y-8">
@@ -182,7 +169,7 @@ const load = async (currentPage = page) => {
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
 
-        <StatCard
+       <StatCard
   title="Total Prompts"
   value={stats.total}
   icon={<FileText size={28} />}

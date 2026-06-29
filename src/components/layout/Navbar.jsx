@@ -6,7 +6,7 @@ import axiosInstance from "@/lib/axios";
 import { useRouter ,usePathname} from "next/navigation";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
+import NotificationBell from "@/components/notifications/NotificationBell";
 import {
   Menu,X,Sparkles, LayoutDashboard,LogOut, Moon, Sun,
 } from "lucide-react";
@@ -64,11 +64,9 @@ export default function Navbar() {
   const isDark = theme === "dark";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 overflow-x-hidden">
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-5 pt-3 md:pt-5">
+    <header className="fixed inset-x-0 top-0 z-50">  <div className="w-full max-w-7xl mx-auto px-3 sm:px-5 pt-3 md:pt-5">
 
-        <div className="rounded-3xl border border-border bg-background/60 backdrop-blur-2xl shadow-xl">
-
+        <div className="rounded-3xl border border-border bg-background/60 backdrop-blur-2xl shadow-xl overflow-visible">
           <div className="h-16 md:h-20 flex items-center justify-between px-4 md:px-8">
 
             <Link href="/" className="flex items-center gap-3 min-w-0">
@@ -113,7 +111,7 @@ export default function Navbar() {
                   <Moon size={18} />
                 )}
               </button>
-
+               {user && <NotificationBell />}
             
               {!user ? (
                 <>
@@ -193,7 +191,7 @@ export default function Navbar() {
 )
 }
     </button>
-
+    <span className="flex gap-2  items-center justify-between">Notifications {user && <NotificationBell />}</span>
    {!user?(
 
       <div className="space-y-4">
@@ -216,11 +214,9 @@ export default function Navbar() {
 
 </div>
 
-)
-
-:
-
-(
+    )
+    :
+        (
 
 <div className="space-y-3">
    <Link

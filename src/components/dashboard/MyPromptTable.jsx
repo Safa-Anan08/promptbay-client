@@ -146,7 +146,7 @@ export default function MyPromptTable({ role }) {
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
-                  <Link href={`/prompt/${item._id}`}>
+                  <Link href={`/prompts/${item._id}`}>
                     <button className="w-full rounded-xl border py-2 flex items-center justify-center gap-2 hover:bg-muted transition">
                       <Eye size={16} />
                       <span className="hidden sm:inline">
@@ -166,12 +166,7 @@ export default function MyPromptTable({ role }) {
                     </button>
                   </Link>
 
-                  <button className="w-full rounded-xl border py-2 flex items-center justify-center gap-2 hover:bg-muted transition">
-                    <BarChart3 size={16} />
-                    <span className="hidden sm:inline">
-                      Stats
-                    </span>
-                  </button>
+                  
 
                   <button
                     onClick={() => remove(item._id)}

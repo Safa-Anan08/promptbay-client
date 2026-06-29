@@ -334,9 +334,7 @@ npm run dev
 # Future Improvements
 
 * AI Prompt Testing
-* Prompt Sharing
-* Dark Mode
-* Notification System
+* Dynamic Notification System
 * Infinite Scroll
 * Rich Text Editor
 
