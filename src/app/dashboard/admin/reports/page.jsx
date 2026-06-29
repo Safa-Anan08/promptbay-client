@@ -48,7 +48,6 @@ export default function ReportsPage() {
         </div>
       ) : (
         <div className="overflow-hidden rounded-[24px] border bg-card md:rounded-[35px]">
-          {/* Desktop */}
           <div className="hidden overflow-x-auto lg:block">
             <table className="w-full">
               <thead>
@@ -121,7 +120,6 @@ export default function ReportsPage() {
             </table>
           </div>
 
-          {/* Mobile */}
           <div className="space-y-4 p-4 lg:hidden">
             {reports.map((item) => (
               <div

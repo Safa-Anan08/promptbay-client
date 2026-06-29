@@ -7,77 +7,134 @@ import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 
 import {
-  Sparkles,  Search,
-  Lock,  LockOpen,
-  Star,  Copy,  Crown,
+  Sparkles,
+  Search,
+  Lock,
+  LockOpen,
+  Star,
+  Copy,
+  Crown,
 } from "lucide-react";
+
 function PromptsContent() {
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
+  const [input, setInput] = useState("");
   const [showUpgrade, setShowUpgrade] = useState(false);
+
   const { user } = useAuth();
+
   const router = useRouter();
   const searchParams = useSearchParams();
-  const category = searchParams.get("category") || "";
-  const visiblePrompts = user ? data : data.slice(0, 8);
- const [page, setPage] = useState(1);
 
-const [totalPages, setTotalPages] =
-  useState(1);
+  const category =
+    searchParams.get("category") || "";
 
-const load = async (currentPage = page) => {
-  try {
-    const res =
-      await axiosInstance.get(
-        "/prompts",
-        {
-          params: {
-            search,
-            category,
-            page: currentPage,
-            limit:9,
-          },
-        }
+  const urlSearch =
+    searchParams.get("search") || "";
+
+  const [page, setPage] = useState(1);
+
+  const [totalPages, setTotalPages] =
+    useState(1);
+
+  const load = async (
+    currentPage = page
+  ) => {
+    try {
+      const res =
+        await axiosInstance.get(
+          "/prompts",
+          {
+            params: {
+              search: urlSearch,
+              category,
+              page: currentPage,
+              limit: 9,
+            },
+          }
+        );
+
+      setData(
+        res.data.prompts || []
       );
 
-    setData(
-      res.data.prompts || []
-    );
-
-    setTotalPages(
-      res.data.pagination
-        ?.totalPages || 1
-    );
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-
-
-
-useEffect(() => {
-  load(page);
-}, [
-  category,
-  page,search
-]);
-
-  const canAccessPremium = () => {
-    const plan = user?.subscription?.plan?.toLowerCase();
-
-    return ["pro", "growth", "premium"].includes(plan);
+      setTotalPages(
+        res.data.pagination
+          ?.totalPages || 1
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    setPage(1);
+  }, [urlSearch, category]);
+
+  useEffect(() => {
+    load(page);
+  }, [
+    page,
+    urlSearch,
+    category,
+  ]);
+
+  const handleSearch = () => {
+    const value =
+      input.trim();
+
+    setPage(1);
+
+    if (!value) {
+      router.replace(
+        "/prompts"
+      );
+
+      setInput("");
+
+      return;
+    }
+
+    router.push(
+      `/prompts?search=${encodeURIComponent(
+        value
+      )}`
+    );
+  };
+
+  const visiblePrompts =
+    user
+      ? data
+      : data.slice(0, 8);
+
+  const canAccessPremium =
+    () => {
+      const plan =
+        user?.subscription?.plan?.toLowerCase();
+
+      return [
+        "pro",
+        "growth",
+        "premium",
+      ].includes(plan);
+    };
 
   const handleView = (item) => {
     if (!user) {
-      toast.error("Please login first");
-      router.push("/register");
+      toast.error(
+        "Please login first"
+      );
+
+      router.push(
+        "/register"
+      );
+
       return;
     }
 
     const locked =
-      item.visibility?.toLowerCase() === "private" &&
+      item.visibility?.toLowerCase() ===
+        "private" &&
       !canAccessPremium();
 
     if (locked) {
@@ -85,13 +142,16 @@ useEffect(() => {
       return;
     }
 
-    router.push(`/prompts/${item._id}`);
+    router.push(
+      `/prompts/${item._id}`
+    );
   };
 
   return (
-    <>
     <section className="max-w-7xl mx-auto px-6 pt-10 pb-24">
+
       <div className="text-center mb-14">
+
         <div className="inline-flex gap-2 items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-5 py-2 text-emerald-500">
           <Sparkles size={16} />
           Premium Collection
@@ -101,34 +161,48 @@ useEffect(() => {
           Explore AI Prompts
         </h1>
 
-        <p className="mt-5 text-muted-foreground">
-          Browse premium prompts from creators
-        </p>
       </div>
 
       <div className="max-w-3xl mx-auto mb-16">
+
         <div className="rounded-3xl border p-3 flex gap-3">
+
           <div className="flex items-center flex-1 px-4">
+
             <Search size={20} />
 
             <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={input}
+              onChange={(e) =>
+                setInput(
+                  e.target.value
+                )
+              }
+              onKeyDown={(e) => {
+                if (
+                  e.key ===
+                  "Enter"
+                ) {
+                  handleSearch();
+                }
+              }}
               placeholder="Search prompts..."
               className="w-full bg-transparent outline-none px-3 py-3"
             />
+
           </div>
 
           <button
-  onClick={() => {
-    setPage(1);
-    load(1);
-  }}
-  className="px-8 py-4 rounded-2xl bg-black text-white"
->
-  Search
-</button>
+            onClick={
+              handleSearch
+            }
+            className="px-8 py-4 rounded-2xl bg-black text-white"
+          >
+            Search
+          </button>
+
         </div>
+
       </div>
 
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -273,7 +347,7 @@ useEffect(() => {
         </div>
       )}
     </section>
-    </>
+    
   );
 }
 export default function Page() {
